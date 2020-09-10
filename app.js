@@ -9,38 +9,70 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Employee = require("./lib/Employee");
+const employeeArray = []
 
-async function promptNewMember() {
-  return await inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "Enter your name",
-    },
+function promptNewMember() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter your name",
+      },
 
-    {
-      type: "input",
-      name: "id",
-      message: "Enter your id number",
-    },
+      {
+        type: "input",
+        name: "id",
+        message: "Enter your id number",
+      },
 
-    {
-      type: "input",
-      name: "email",
-      message: "Enter your email address",
-    },
-  ]);
-}
+      {
+        type: "input",
+        name: "email",
+        message: "Enter your email address",
+      },
+    ])
+    .then((newMember) => {
+      console.log(newMember.name);
+      console.log(newMember.id);
+      console.log(newMember.email);
 
-async function promptRole() {
-  return await inquirer.prompt([
-    {
-      type: "list",
-      name: "role",
-      message: "Select your role",
-      choices: ["Manager", "Engineer", "Intern"],
-    },
-  ]);
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "role",
+            message: "Select your role",
+            choices: ["Manager", "Engineer", "Intern"],
+          },
+        ])
+        .then((choice) => {
+          console.log(choice);
+          switch (choice.role) {
+            case "Manager":
+              inquirer.prompt([
+                  {
+                    type: "input",
+                    name: "officeNumber",
+                    message: "Enter your office number",
+                  },
+                ])
+                .then((managerChoice) => {
+                  console.log(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    managerChoice.officeNumber
+                  );
+
+                  const newManager = new Manager(newMember.name, newMember.id, newMember.email, managerChoice.officeNumber);
+
+                  employeeArray.push(newManager);
+                });
+          }
+        });
+    });
 }
 
 async function createManager() {
@@ -64,19 +96,18 @@ async function createEngineer() {
 }
 
 async function createIntern() {
-    return await inquirer.prompt([
-      {
-        type: "input",
-        name: "school",
-        message: "Enter your school",
-      },
-    ]);
-  }
+  return await inquirer.prompt([
+    {
+      type: "input",
+      name: "school",
+      message: "Enter your school",
+    },
+  ]);
+}
 
-  async function appMenu() {
-      const result = promptNewMember()
-      
-  }
+async function appMenu() {
+  const result = promptNewMember();
+}
 
 //function appMenu() inside - create one Manager. Create manager first, then createTeam() function , in createteam have a switch case to ask which kind of emmployee needs to be created and then run the needed function for createEngineer or createIntern if there is no other entry then build the team and render.
 
