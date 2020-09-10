@@ -10,9 +10,73 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-function appMenu() {
-    
+async function promptNewMember() {
+  return await inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "Enter your name",
+    },
+
+    {
+      type: "input",
+      name: "id",
+      message: "Enter your id number",
+    },
+
+    {
+      type: "input",
+      name: "email",
+      message: "Enter your email address",
+    },
+  ]);
 }
+
+async function promptRole() {
+  return await inquirer.prompt([
+    {
+      type: "list",
+      name: "role",
+      message: "Select your role",
+      choices: ["Manager", "Engineer", "Intern"],
+    },
+  ]);
+}
+
+async function createManager() {
+  return await inquirer.prompt([
+    {
+      type: "input",
+      name: "officeNumber",
+      message: "Enter your office number",
+    },
+  ]);
+}
+
+async function createEngineer() {
+  return await inquirer.prompt([
+    {
+      type: "input",
+      name: "github",
+      message: "Enter your github ID",
+    },
+  ]);
+}
+
+async function createIntern() {
+    return await inquirer.prompt([
+      {
+        type: "input",
+        name: "school",
+        message: "Enter your school",
+      },
+    ]);
+  }
+
+  async function appMenu() {
+      const result = promptNewMember()
+      
+  }
 
 //function appMenu() inside - create one Manager. Create manager first, then createTeam() function , in createteam have a switch case to ask which kind of emmployee needs to be created and then run the needed function for createEngineer or createIntern if there is no other entry then build the team and render.
 
