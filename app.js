@@ -10,7 +10,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
-const employeeArray = []
+const employeeArray = [];
 
 function promptNewMember() {
   inquirer
@@ -51,7 +51,8 @@ function promptNewMember() {
           console.log(choice);
           switch (choice.role) {
             case "Manager":
-              inquirer.prompt([
+              inquirer
+                .prompt([
                   {
                     type: "input",
                     name: "officeNumber",
@@ -66,48 +67,78 @@ function promptNewMember() {
                     managerChoice.officeNumber
                   );
 
-                  const newManager = new Manager(newMember.name, newMember.id, newMember.email, managerChoice.officeNumber);
+                  const newManager = new Manager(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    managerChoice.officeNumber
+                  );
 
                   employeeArray.push(newManager);
                 });
+              break;
+            case "Engineer":
+              console.log(choice.role);
+              inquirer
+                .prompt([
+                  {
+                    type: "input",
+                    name: "github",
+                    message: "Enter your github ID",
+                  },
+                ])
+                .then((engineerChoice) => {
+                  console.log(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    engineerChoice.github
+                  );
+
+                  const newEngineer = new Engineer(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    engineerChoice.github
+                  );
+
+                  employeeArray.push(newEngineer);
+                });
+              break;
+            case "Intern":
+              console.log(Choice.role);
+              inquirer
+                .prompt([
+                  {
+                    type: "input",
+                    name: "school",
+                    message: "Enter your school",
+                  },
+                ])
+                .then((internChoice) => {
+                  console.log(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    internChoice.school
+                  );
+
+                  const newIntern = new Intern(
+                    newMember.name,
+                    newMember.id,
+                    newMember.email,
+                    engineerChoice.github
+                  );
+
+                  employeeArray.push(newIntern);
+                });
+              break;
           }
         });
     });
 }
+promptNewMember();
 
-async function createManager() {
-  return await inquirer.prompt([
-    {
-      type: "input",
-      name: "officeNumber",
-      message: "Enter your office number",
-    },
-  ]);
-}
-
-async function createEngineer() {
-  return await inquirer.prompt([
-    {
-      type: "input",
-      name: "github",
-      message: "Enter your github ID",
-    },
-  ]);
-}
-
-async function createIntern() {
-  return await inquirer.prompt([
-    {
-      type: "input",
-      name: "school",
-      message: "Enter your school",
-    },
-  ]);
-}
-
-async function appMenu() {
-  const result = promptNewMember();
-}
 
 //function appMenu() inside - create one Manager. Create manager first, then createTeam() function , in createteam have a switch case to ask which kind of emmployee needs to be created and then run the needed function for createEngineer or createIntern if there is no other entry then build the team and render.
 
