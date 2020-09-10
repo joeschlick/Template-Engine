@@ -10,134 +10,160 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
-const employeeArray = [];
+//const employeeArray = [];
 
-function promptNewMember() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "Enter your name",
-      },
 
-      {
-        type: "input",
-        name: "id",
-        message: "Enter your id number",
-      },
+let EmployeeArr = []
+const Joe = new Engineer("joe", 15, "joe@yahoo.com", "joe's github")
+EmployeeArr.push(Joe)
+console.log(render(EmployeeArr))
 
-      {
-        type: "input",
-        name: "email",
-        message: "Enter your email address",
-      },
-    ])
-    .then((newMember) => {
-      console.log(newMember.name);
-      console.log(newMember.id);
-      console.log(newMember.email);
+// function createTeam() {
+//     inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "intro",
+//         message: "What would you like to do?",
+//         choices: ["Create new employee", "Exit"]
+//       },
+//     ])
+//     .then((introChoice) => {
+//         if (introChoice == "Create new employee") {
+//             promptNewMember()
+//         }
+//         else {
+//             process.exit()
+//         }
+//     })
 
-      inquirer
-        .prompt([
-          {
-            type: "list",
-            name: "role",
-            message: "Select your role",
-            choices: ["Manager", "Engineer", "Intern"],
-          },
-        ])
-        .then((choice) => {
-          console.log(choice);
-          switch (choice.role) {
-            case "Manager":
-              inquirer
-                .prompt([
-                  {
-                    type: "input",
-                    name: "officeNumber",
-                    message: "Enter your office number",
-                  },
-                ])
-                .then((managerChoice) => {
-                  console.log(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    managerChoice.officeNumber
-                  );
+// }
+// function promptNewMember() {
+//   inquirer
+//     .prompt([
+//       {
+//         type: "input",
+//         name: "name",
+//         message: "Enter your name",
+//       },
 
-                  const newManager = new Manager(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    managerChoice.officeNumber
-                  );
+//       {
+//         type: "input",
+//         name: "id",
+//         message: "Enter your id number",
+//       },
 
-                  employeeArray.push(newManager);
-                });
-              break;
-            case "Engineer":
-              console.log(choice.role);
-              inquirer
-                .prompt([
-                  {
-                    type: "input",
-                    name: "github",
-                    message: "Enter your github ID",
-                  },
-                ])
-                .then((engineerChoice) => {
-                  console.log(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    engineerChoice.github
-                  );
+//       {
+//         type: "input",
+//         name: "email",
+//         message: "Enter your email address",
+//       },
+//     ])
+//     .then((newMember) => {
+//       console.log(newMember.name);
+//       console.log(newMember.id);
+//       console.log(newMember.email);
 
-                  const newEngineer = new Engineer(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    engineerChoice.github
-                  );
+//       inquirer
+//         .prompt([
+//           {
+//             type: "list",
+//             name: "role",
+//             message: "Select your role",
+//             choices: ["Manager", "Engineer", "Intern"],
+//           },
+//         ])
+//         .then((choice) => {
+//           console.log(choice);
+//           switch (choice.role) {
+//             case "Manager":
+//               inquirer
+//                 .prompt([
+//                   {
+//                     type: "input",
+//                     name: "officeNumber",
+//                     message: "Enter your office number",
+//                   },
+//                 ])
+//                 .then((managerChoice) => {
+//                   console.log(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     managerChoice.officeNumber
+//                   );
 
-                  employeeArray.push(newEngineer);
-                });
-              break;
-            case "Intern":
-              console.log(Choice.role);
-              inquirer
-                .prompt([
-                  {
-                    type: "input",
-                    name: "school",
-                    message: "Enter your school",
-                  },
-                ])
-                .then((internChoice) => {
-                  console.log(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    internChoice.school
-                  );
+//                   const newManager = new Manager(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     managerChoice.officeNumber
+//                   );
 
-                  const newIntern = new Intern(
-                    newMember.name,
-                    newMember.id,
-                    newMember.email,
-                    engineerChoice.github
-                  );
+//                   employeeArray.push(newManager);
+//                 });
+//               break;
+//             case "Engineer":
+//               console.log(choice.role);
+//               inquirer
+//                 .prompt([
+//                   {
+//                     type: "input",
+//                     name: "github",
+//                     message: "Enter your github ID",
+//                   },
+//                 ])
+//                 .then((engineerChoice) => {
+//                   console.log(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     engineerChoice.github
+//                   );
 
-                  employeeArray.push(newIntern);
-                });
-              break;
-          }
-        });
-    });
-}
-promptNewMember();
+//                   const newEngineer = new Engineer(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     engineerChoice.github
+//                   );
+
+//                   employeeArray.push(newEngineer);
+//                 });
+//               break;
+//             case "Intern":
+//               console.log(Choice.role);
+//               inquirer
+//                 .prompt([
+//                   {
+//                     type: "input",
+//                     name: "school",
+//                     message: "Enter your school",
+//                   },
+//                 ])
+//                 .then((internChoice) => {
+//                   console.log(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     internChoice.school
+//                   );
+
+//                   const newIntern = new Intern(
+//                     newMember.name,
+//                     newMember.id,
+//                     newMember.email,
+//                     engineerChoice.github
+//                   );
+
+//                   employeeArray.push(newIntern);
+//                 });
+//               break;
+//           }
+//         });
+//     });
+// }
+// promptNewMember();
 
 
 //function appMenu() inside - create one Manager. Create manager first, then createTeam() function , in createteam have a switch case to ask which kind of emmployee needs to be created and then run the needed function for createEngineer or createIntern if there is no other entry then build the team and render.
