@@ -29,7 +29,7 @@ function appMenu() {
       },
     ])
     .then((introChoice) => {
-      switch (introChoice) {
+      switch (introChoice.intro) {
         case "Add a new employee":
           promptNewMember();
           break;
@@ -104,6 +104,7 @@ function promptNewMember() {
                   );
 
                   employeeArray.push(newManager);
+                  appMenu();
                 });
               break;
             case "Engineer":
@@ -132,10 +133,11 @@ function promptNewMember() {
                   );
 
                   employeeArray.push(newEngineer);
+                  appMenu();
                 });
               break;
             case "Intern":
-              console.log(Choice.role);
+              console.log(choice.role);
               inquirer
                 .prompt([
                   {
@@ -156,7 +158,7 @@ function promptNewMember() {
                     newMember.name,
                     newMember.id,
                     newMember.email,
-                    engineerChoice.github
+                    internChoice.school
                   );
 
                   employeeArray.push(newIntern);
